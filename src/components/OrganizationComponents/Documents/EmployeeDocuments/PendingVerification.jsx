@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
+import { MdSearch } from "react-icons/md";
+
 
 export default function PendingVerification() {
   const [expandedRow, setExpandedRow] = useState(null);
   const [showModal, setShowModal] = useState(false);
-const [selectedCount, setSelectedCount] = useState(0);
-const [showToast, setShowToast] = useState(false);
-  
+  const [selectedCount, setSelectedCount] = useState(0);
+  const [showToast, setShowToast] = useState(false);
+
 
   const data = [
     {
@@ -81,10 +83,14 @@ const [showToast, setShowToast] = useState(false);
         <div className="bg-white border border-gray-200  shadow-md">
 
           {/* FILTER ROW */}
-          <div className="flex flex-wrap border-b border-gray-200">
+          <div className="flex flex-wrap border-b border-gray-300">
             {filters.map((item, i) => (
-              <div key={i} className="document-filter-item p-2">
-                <select className="document-control">
+              <div
+                key={i}
+                className={`px-4 py-2 ${i !== filters.length - 0 ? "border-r border-gray-300" : ""
+                  }`}
+              >
+                <select className="bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm text-gray-800 pr-6">
                   <option>{item.label}</option>
                   {item.options.map((opt, idx) => (
                     <option key={idx}>{opt}</option>
@@ -92,6 +98,12 @@ const [showToast, setShowToast] = useState(false);
                 </select>
               </div>
             ))}
+          </div>
+          <div className="p-4 border-b border-gray-300">
+            <span className="text-sm text-gray-600">
+              <MdSearch className="inline mr-2" />
+              Search...
+            </span>
           </div>
 
           {/* TABLE */}
@@ -141,15 +153,15 @@ const [showToast, setShowToast] = useState(false);
 
                       <td className="document-td">
                         <div className="document-actions">
-                         <button
-  className="document-action-primary"
-  onClick={() => {
-    setSelectedCount(item.documents.length);
-    setShowModal(true);
-  }}
->
-  Verify All
-</button>
+                          <button
+                            className="document-action-primary"
+                            onClick={() => {
+                              setSelectedCount(item.documents.length);
+                              setShowModal(true);
+                            }}
+                          >
+                            Verify All
+                          </button>
                           <button className="document-action-outline">
                             Reject All
                           </button>
@@ -215,85 +227,85 @@ const [showToast, setShowToast] = useState(false);
 
         </div>
       </div>
-{showModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
 
-    {/* MODAL BOX */}
-    <div className="bg-white rounded-lg shadow-lg w-[420px] overflow-hidden">
+          {/* MODAL BOX */}
+          <div className="bg-white rounded-lg shadow-lg w-[420px] overflow-hidden">
 
-      {/* HEADER */}
-      <div className="bg-gray-700 text-white px-5 py-3 text-sm font-medium">
-        Confirm Verification
-      </div>
+            {/* HEADER */}
+            <div className="bg-gray-700 text-white px-5 py-3 text-sm font-medium">
+              Confirm Verification
+            </div>
 
-      {/* BODY */}
-      <div className="p-5">
-        <p className="text-sm text-gray-600">
-          The <span className="font-semibold">{selectedCount}</span> documents under this section will be marked as verified.
-        </p>
-      </div>
+            {/* BODY */}
+            <div className="p-5">
+              <p className="text-sm text-gray-600">
+                The <span className="font-semibold">{selectedCount}</span> documents under this section will be marked as verified.
+              </p>
+            </div>
 
-      {/* FOOTER */}
-      <div className="flex justify-end gap-3 px-5 pb-4">
-        
-        <button
-          onClick={() => setShowModal(false)}
-          className="px-4 py-2 border border-gray-300 rounded text-sm"
-        >
-          Cancel
-        </button>
+            {/* FOOTER */}
+            <div className="flex justify-end gap-3 px-5 pb-4">
 
-        <button
-  onClick={() => {
-    setShowModal(false);
-    setShowToast(true);
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 border border-gray-300 rounded text-sm"
+              >
+                Cancel
+              </button>
 
-    // auto hide after 3 sec
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
-  }}
-  className="px-4 py-2 bg-[#718fc2] text-white rounded text-sm"
->
-  Confirm
-</button>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  setShowToast(true);
 
-      </div>
+                  // auto hide after 3 sec
+                  setTimeout(() => {
+                    setShowToast(false);
+                  }, 3000);
+                }}
+                className="px-4 py-2 bg-[#718fc2] text-white rounded text-sm"
+              >
+                Confirm
+              </button>
 
-    </div>
-  </div>
-)}
-{showToast && (
-  <div className="fixed top-5 right-5 z-50">
-    
-    <div className="flex items-center bg-white shadow-lg border border-gray-200 rounded overflow-hidden w-[320px]">
+            </div>
 
-      {/* LEFT GREEN BOX */}
-      <div className="bg-green-600 text-white px-3 py-4 flex items-center justify-center">
-        ✓
-      </div>
-
-      {/* TEXT */}
-      <div className="flex-1 px-4 py-2">
-        <div className="text-sm font-semibold text-gray-800">
-          Success!
+          </div>
         </div>
-        <div className="text-xs text-gray-500">
-          All documents verified successfully
+      )}
+      {showToast && (
+        <div className="fixed top-5 right-5 z-50">
+
+          <div className="flex items-center bg-white shadow-lg border border-gray-200 rounded overflow-hidden w-[320px]">
+
+            {/* LEFT GREEN BOX */}
+            <div className="bg-green-600 text-white px-3 py-4 flex items-center justify-center">
+              ✓
+            </div>
+
+            {/* TEXT */}
+            <div className="flex-1 px-4 py-2">
+              <div className="text-sm font-semibold text-gray-800">
+                Success!
+              </div>
+              <div className="text-xs text-gray-500">
+                All documents verified successfully
+              </div>
+            </div>
+
+            {/* CLOSE */}
+            <button
+              onClick={() => setShowToast(false)}
+              className="px-3 text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+
+          </div>
         </div>
-      </div>
-
-      {/* CLOSE */}
-      <button
-        onClick={() => setShowToast(false)}
-        className="px-3 text-gray-400 hover:text-gray-600"
-      >
-        ✕
-      </button>
-
-    </div>
-  </div>
-)}
+      )}
     </div>
   );
 }
