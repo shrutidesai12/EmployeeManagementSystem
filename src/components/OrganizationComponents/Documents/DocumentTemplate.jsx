@@ -6,9 +6,6 @@ import OrganizationDocument from "./OrganizationDocument";
 import EmployeeDocuments from "../Documents/EmployeeDocuments/EmployeeDocuments";
 
 
-
-
-
 const documentTemplatesData = [
     {
         name: "Employment Agreement",

@@ -1,10 +1,8 @@
+
 import React, { useState } from "react";
 import PendingVerification from "./PendingVerification";
-import PendingEmployee from "./PendingEmployee";
-// import VerifiedDocuments from "./VerifiedDocuments";
-// import ExpiringDocs from "./ExpiringDocs";
-// import BulkUploads from "./BulkUploads";
-// import Settings from "./Settings";
+import BulkUploads from "./BulkUploads";
+import EmployeeDocumentsSettings from "./DocumentsSetting";
 
 export default function EmployeeDocuments() {
   const [activeTab, setActiveTab] = useState("Pending Verification");
@@ -21,43 +19,40 @@ export default function EmployeeDocuments() {
   const renderTab = () => {
     switch (activeTab) {
       case "Pending Verification":
-        return <PendingVerification />;
       case "Pending on Employee":
-        return <PendingEmployee />;
       case "Verified Documents":
-        return <VerifiedDocuments />;
+        return <PendingVerification activeTab={activeTab} />;
+
       case "Expiring Docs":
-        return <ExpiringDocs />;
+        return <PendingVerification activeTab={activeTab} />;
+
       case "Bulk Uploads":
         return <BulkUploads />;
       case "Settings":
-        return <Settings />;
+        return <EmployeeDocumentsSettings />;
+
       default:
         return null;
     }
   };
 
   return (
-    <div >
-      
-      {/* Tabs */}
-      <div className="flex gap-2 border mb-4 border-gray-300 rounded shadow-sm bg-white">
+    <div>
+      <div className="flex gap-2 border mb-4 border-gray-300 rounded shadow-sm bg-white flex-wrap">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm border  ${
-              activeTab === tab
+            className={`px-4 py-2 text-sm border ${activeTab === tab
                 ? "border-[#718FC2] text-[#718FC2] bg-purple-50"
                 : "border-transparent text-gray-600"
-            }`}
+              }`}
           >
             {tab}
           </button>
         ))}
       </div>
 
-      {/* Tab Content */}
       {renderTab()}
     </div>
   );

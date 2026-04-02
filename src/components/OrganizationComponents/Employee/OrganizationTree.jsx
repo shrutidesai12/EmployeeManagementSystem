@@ -294,8 +294,6 @@ function MeView({ expandedMap, toggleNode }) {
             </>
           )}
         </div>
-
-        {/* Vertical Line to current user card (optional) */}
         {!expandedMap[manager.id] && (
           <div className="w-px h-[80px] bg-[var(--org-line)]"></div>
         )}
