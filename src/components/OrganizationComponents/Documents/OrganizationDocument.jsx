@@ -378,17 +378,17 @@ const OrganizationDocument = () => {
                             </button>
 
                             <button
-  onClick={() => setIsAddOrganizationDocumentOpen(true)}
-  className="px-3 py-2 rounded-md text-[12px] border flex items-center gap-2"
-  style={{
-    borderColor: "var(--primary-color)",
-    color: "var(--primary-color)",
-    backgroundColor: "var(--white)",
-  }}
->
-  <FaPlus size={9} />
-  Add document
-</button>
+                                onClick={() => setIsAddOrganizationDocumentOpen(true)}
+                                className="px-3 py-2 rounded-md text-[12px] border flex items-center gap-2"
+                                style={{
+                                    borderColor: "var(--primary-color)",
+                                    color: "var(--primary-color)",
+                                    backgroundColor: "var(--white)",
+                                }}
+                            >
+                                <FaPlus size={9} />
+                                Add document
+                            </button>
                             <button
                                 className="px-3 py-2 rounded-md text-[12px] border"
                                 style={{
@@ -584,9 +584,9 @@ const OrganizationDocument = () => {
                 onClose={() => setIsAddDocumentOpen(false)}
             />
             <AddOrganizationDocumentDrawer
-  isOpen={isAddOrganizationDocumentOpen}
-  onClose={() => setIsAddOrganizationDocumentOpen(false)}
-/>
+                isOpen={isAddOrganizationDocumentOpen}
+                onClose={() => setIsAddOrganizationDocumentOpen(false)}
+            />
         </div>
     );
 };

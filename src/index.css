@@ -234,3 +234,37 @@ body {
 .pe-toggle-active { background-color: var(--pe-toggle-bg); color: #fff; }
 .pe-toggle-inactive { color: var(--pe-toggle-bg); }
 .pe-toggle-inactive:hover { background-color: var(--pe-toggle-hover); }
+
+
+
+.document-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.document-icon-btn:hover {
+  color: #718fc2;
+}
+
+.document-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.document-link {
+  color: #718fc2;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.document-link:hover {
+  text-decoration: underline;
+}
