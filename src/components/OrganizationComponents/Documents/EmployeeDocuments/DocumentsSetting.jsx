@@ -7,6 +7,8 @@ export default function EmployeeDocumentsSettings() {
     const [showDotsMenu, setShowDotsMenu] = useState(false);
     const [showManageDrawer, setShowManageDrawer] = useState(false);
     const [drawerPermissions, setDrawerPermissions] = useState({});
+    const [savedFolders, setSavedFolders] = useState({});
+
 
     const dotsMenuRef = useRef(null);
 
@@ -39,16 +41,20 @@ export default function EmployeeDocumentsSettings() {
             folderName: "Previous Experience",
             description: "This section contains previous experience documents of an employee.",
             isConfidential: false,
+            permissions: {},
+
         },
         "Employee Letters": {
             folderName: "Employee Letters",
             description: "This section contains employee letter documents.",
             isConfidential: false,
+            permissions: {},
         },
         "Identity": {
             folderName: "Identity",
             description: "This section contains identity documents of an employee.",
             isConfidential: false,
+            permissions: {},
         },
     });
 
@@ -91,17 +97,30 @@ export default function EmployeeDocumentsSettings() {
         setShowManageDrawer(true);
         setShowDotsMenu(false);
     };
-
     const handleUpdateSettings = () => {
+        const updatedFolder = {
+            folderName: drawerFolderName || selectedDoc,
+            description: drawerDescription || "",
+            isConfidential: drawerIsConfidential,
+            allowEmployeesMove: drawerAllowEmployeesMove,
+            permissions: drawerPermissions,
+        };
+
+        // Save in folder settings
         setFolderSettings((prev) => ({
             ...prev,
             [selectedDoc]: {
                 ...prev[selectedDoc],
-                allowEmployeesMove: drawerAllowEmployeesMove,
-                folderName: drawerFolderName,
-                description: drawerDescription,
-                isConfidential: drawerIsConfidential,
-                permissions: drawerPermissions,
+                ...updatedFolder,
+            },
+        }));
+
+        // Save separate block for currently selected document
+        setSavedFolders((prev) => ({
+            ...prev,
+            [selectedDoc]: {
+                name: selectedDoc,
+                ...updatedFolder,
             },
         }));
 
@@ -389,10 +408,10 @@ export default function EmployeeDocumentsSettings() {
                             })}
                         </div>
                     </div>
-
-                    {/* Content panel */}
-                    <div className="bg-white border border-[#e6e8ef] min-h-[116px] relative">
-                        <div className="absolute right-3 top-3 z-30" ref={dotsMenuRef}>
+                    {/* Right side column */}
+                    <div className="space-y-6">
+                        {/* Content panel */}
+                        <div className="bg-white border border-[#e6e8ef] min-h-[116px] relative">                        <div className="absolute right-3 top-3 z-30" ref={dotsMenuRef}>
                             <button
                                 onClick={() => setShowDotsMenu((prev) => !prev)}
                                 className="text-[#9ca3af] hover:text-[#6b7280] p-1 rounded"
@@ -412,43 +431,86 @@ export default function EmployeeDocumentsSettings() {
                             )}
                         </div>
 
-                        <div className="px-4 py-4">
-                            <div className="flex items-start gap-3">
-                                <span className="mt-[2px] inline-flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#63c9d2]">
-                                    <Folder size={12} strokeWidth={2.1} className="text-white" />
-                                </span>
+                            <div className="px-4 py-4">
+                                <div className="flex items-start gap-3">
+                                    <span className="mt-[2px] inline-flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#63c9d2]">
+                                        <Folder size={12} strokeWidth={2.1} className="text-white" />
+                                    </span>
 
-                                <div>
-                                    <h2 className="text-[14px] leading-[18px] font-semibold text-[#394150]">
-                                        {activeDoc.name}
-                                    </h2>
-                                    <p className="mt-1 text-[11.5px] leading-[15px] text-[#98a0ad]">
-                                        {folderSettings[selectedDoc]?.description ||
-                                            `This folder is used to manage ${activeDoc.name.toLowerCase()} documents.`}
+                                    <div>
+                                        <h2 className="text-[14px] leading-[18px] font-semibold text-[#394150]">
+                                            {activeDoc.name}
+                                        </h2>
+                                        <p className="mt-1 text-[11.5px] leading-[15px] text-[#98a0ad]">
+                                            {folderSettings[selectedDoc]?.description ||
+                                                `This folder is used to manage ${activeDoc.name.toLowerCase()} documents.`}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 pl-[36px]">
+                                    <div className="text-[10px] font-semibold tracking-[0.08em] text-[#9aa1ae] uppercase">
+                                        Permissions
+                                    </div>
+                                    <p className="mt-2 text-[12.5px] leading-[18px] text-[#4c5563] max-w-[720px]">
+                                        {selectedDoc === "Imported Documents"
+                                            ? folderSettings[selectedDoc]?.allowEmployeesMove
+                                                ? "HR Manager, HR Executive, Global Admin and Employees can move the documents into the respective folder."
+                                                : "Only HR Manager, HR Executive and Global Admin can move the documents into the respective folder."
+                                            : folderSettings[selectedDoc]?.isConfidential
+                                                ? "This folder is marked as confidential."
+                                                : "This folder follows standard employee document access permissions."}
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="mt-8 pl-[36px]">
-                                <div className="text-[10px] font-semibold tracking-[0.08em] text-[#9aa1ae] uppercase">
-                                    Permissions
-                                </div>
-                                <p className="mt-2 text-[12.5px] leading-[18px] text-[#4c5563] max-w-[720px]">
-                                    {selectedDoc === "Imported Documents"
-                                        ? folderSettings[selectedDoc]?.allowEmployeesMove
-                                            ? "HR Manager, HR Executive, Global Admin and Employees can move the documents into the respective folder."
-                                            : "Only HR Manager, HR Executive and Global Admin can move the documents into the respective folder."
-                                        : folderSettings[selectedDoc]?.isConfidential
-                                            ? "This folder is marked as confidential."
-                                            : "This folder follows standard employee document access permissions."}
-                                </p>
-                            </div>
                         </div>
+                        {savedFolders[selectedDoc] && (
+                            <div className="bg-white border border-[#e6e8ef] p-5">
+                                <div className="mb-4">
+                                    <h3 className="text-[14px] font-semibold text-[#394150]">
+                                        Saved Folder Block
+                                    </h3>
+                                    <p className="mt-1 text-[12px] text-[#8f96a3]">
+                                        This saved section belongs to {selectedDoc}.
+                                    </p>
+                                </div>
+
+                                <div className="border border-[#e6e8ef] rounded-[6px] bg-[#fafbff] p-5">
+                                    <div className="flex items-start justify-between">
+                                        <div>
+                                            <h3 className="text-[15px] font-semibold text-[#394150]">
+                                                {savedFolders[selectedDoc].folderName || savedFolders[selectedDoc].name}
+                                            </h3>
+                                            <p className="mt-1 text-[12.5px] text-[#7f8796] leading-[18px]">
+                                                {savedFolders[selectedDoc].description || "No description added."}
+                                            </p>
+                                        </div>
+
+                                        {savedFolders[selectedDoc].isConfidential && (
+                                            <span className="text-[11px] px-2 py-1 rounded bg-red-50 text-red-600 border border-red-200">
+                                                Confidential
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-4 pt-4 border-t border-[#eceef3]">
+                                        <p className="text-[12.5px] text-[#4c5563]">
+                                            {savedFolders[selectedDoc].allowEmployeesMove
+                                                ? "Employees are allowed to move documents."
+                                                : "Employees are not allowed to move documents."}
+                                        </p>
+
+                                        <button className="mt-4 rounded-[4px] border border-[#7f63ff] bg-white text-[#7f63ff] font-medium px-4 py-2 text-[13px] hover:bg-[#faf8ff] transition">
+                                            + Add Folder
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
-
-            {/* Manage Folder Drawer */}
             {showManageDrawer && (
                 <div
                     className="fixed inset-0 z-50 flex justify-end bg-black/20"
