@@ -6,13 +6,13 @@ export default function BulkUploads() {
     const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
     const menuRef = useRef(null);
     const data = [
-        {
-            id: "6839",
-            uploadedBy: "Shruti Desai",
-            uploadedOn: "01 Apr, 2026",
-            success: 120,
-            errors: 5,
-        },
+       {
+    id: "6839",
+    uploadedBy: "Shruti Desai",
+    uploadedOn: "01 Apr, 2026",
+    success: 150,
+    errors: 2,
+},
 
     ];
     useEffect(() => {
