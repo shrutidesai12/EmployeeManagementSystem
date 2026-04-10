@@ -264,7 +264,7 @@ export default function PendingVerification({ activeTab }) {
               {activeTab === "Verified Documents" &&
                 "These documents are already verified."}
                 {activeTab === "Expiring Docs" &&
-  "These documents are about to expire and require renewal."}
+                 "These documents are about to expire and require renewal."}
             </p>
           </div>
 

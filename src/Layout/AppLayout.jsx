@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-
+import ChatBot from "../components/ChatBot";
 export default function AppLayout() {
   return (
     <div className="flex h-screen overflow-hidden">
@@ -17,9 +17,10 @@ export default function AppLayout() {
 
         {/* Page content */}
         <div className="flex-1 overflow-y-auto " style={{ backgroundColor: "#F5F5F5" }}>
-          <Outlet /> {/* This is where your routed pages render */}
+          <Outlet /> 
         </div>
       </div>
+      <ChatBot />
     </div>
   );
 }

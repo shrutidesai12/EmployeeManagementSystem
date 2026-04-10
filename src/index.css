@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
 /* 🌿 Global Variables */
 :root {
   --primary-color: #718fc2;
