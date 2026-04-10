@@ -31,10 +31,8 @@ export default function BulkUploads() {
 
     return (
         <div>
-            {/* 🔹 Heading + Button */}
             <div className="flex items-start justify-between mb-2">
 
-                {/* Left Side (Text) */}
                 <div>
                     <h2 className="text-lg font-semibold mb-1">
                         Bulk upload documents
@@ -45,23 +43,20 @@ export default function BulkUploads() {
                     </p>
                 </div>
 
-                {/* Right Side Button */}
                 <button className="px-4 py-2 text-sm font-medium text-white bg-[#718FC2] rounded-md hover:bg-[#5f7fb5]">
                     + Add new documents
                 </button>
 
             </div>
 
-            {/* 🔹 Sub Heading */}
+            
             <h3 className="text-sm font-semibold text-gray-700 mb-3">
                 Pending batches
             </h3>
 
-            {/* 🔹 Table */}
             <div className="overflow-x-auto border rounded border-gray-300 bg-white">
                 <table className="w-full text-sm">
 
-                    {/* Header */}
                     <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
                         <tr>
                             <th className="px-4 py-3 text-left">Docs</th>
@@ -95,25 +90,22 @@ export default function BulkUploads() {
                                     </div>
                                 </td>
 
-                                {/* ACTION COLUMN */}
                                 <td className="px-4 py-3 text-right relative">
                                     <div className="flex items-center justify-end gap-3">
 
-                                        {/* Open Button */}
                                         <button className="px-3 py-1.5 text-sm text-blue-600 border border-blue-300 rounded-md hover:bg-blue-50">
                                             Open
                                         </button>
 
-                                        {/* Menu Button */}
                                         <button
                                             onClick={(e) => {
-                                                e.stopPropagation(); // ✅ VERY IMPORTANT
+                                                e.stopPropagation(); 
 
                                                 const rect = e.currentTarget.getBoundingClientRect();
 
                                                 setMenuPosition({
                                                     top: rect.bottom + window.scrollY,
-                                                    left: rect.right - 200, // adjust width
+                                                    left: rect.right - 200, 
                                                 });
 
                                                 setOpenMenuIndex(openMenuIndex === index ? null : index);

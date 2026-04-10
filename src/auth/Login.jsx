@@ -1,28 +1,43 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/apikeys";
 
 function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       alert("Please enter email and password");
       return;
     }
 
-    // ✅ Save token so ProtectedRoute allows access
-    localStorage.setItem("token", "demo-user-token");
+    try {
+      setLoading(true);
 
-    alert("Login successful ✅");
-    navigate("/dashboard");
+      const response = await login(email, password);
+
+      localStorage.setItem("token", response.data.token);
+
+      if (response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+
+      alert("Login successful ✅");
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      console.error("Login error:", error);
+      alert(error?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* LEFT SIDE */}
       <div
         className="w-full h-[45vh] sm:h-[50vh] md:h-auto md:w-1/2 flex items-center justify-center p-6 sm:p-8"
         style={{ backgroundColor: "#718FC8" }}
@@ -34,7 +49,6 @@ function Login() {
         />
       </div>
 
-      {/* RIGHT SIDE */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-100 px-4 py-8">
         <div className="bg-white w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-lg shadow-lg">
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-6">
@@ -59,9 +73,10 @@ function Login() {
 
           <button
             onClick={handleLogin}
-            className="w-full bg-[#718FC8] text-white py-2 sm:py-3 rounded hover:opacity-90 transition"
+            disabled={loading}
+            className="w-full bg-[#718FC8] text-white py-2 sm:py-3 rounded hover:opacity-90 transition disabled:opacity-50"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <div className="text-right mt-3">

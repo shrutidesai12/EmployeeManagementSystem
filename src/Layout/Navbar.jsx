@@ -1,13 +1,19 @@
 
 import React from "react";
-import { Bell, Search, User } from "lucide-react";
+import { Bell, Search, User, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-   navigate("/employees/1/profile")
+    navigate("/employees/1/profile")
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.clear();
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -38,6 +44,13 @@ export default function Navbar() {
           </div>
           <span className="text-sm font-medium text-white">A</span>
         </div>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+        >
+          <LogOut size={16} />
+          Logout
+        </button>
       </div>
     </div>
   );
