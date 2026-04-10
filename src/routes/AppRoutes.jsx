@@ -4,9 +4,7 @@ import AppLayout from "../Layout/AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import LeaveDashboard from "../pages/leaves/LeaveDashboard";
-
-
-// Pages
+import Me from "../pages/Me/Me";
 import KekaHome from "../pages/dashboard/Dashboard";
 import Employees from "../pages/employee/Employees";
 import EmployeeDetail from "../pages/employee/EmployeeDetail";
@@ -16,7 +14,6 @@ import Performance from "../pages/performance/Performance";
 import ProfilePage from "../pages/dashboard/ProfilePage";
 import AddDocumentDetailsPage from "../components/DashboardComponents/EmployeeprofileComponents/DocumentTab/AddDocumentDetailsPage";
 import EmployeeDirectory from "../pages/Organization/OrganizationMain";
-
 
 function AppRoutes() {
   return (
@@ -39,9 +36,7 @@ function AppRoutes() {
             <Route path="/employees/:id/profile" element={<ProfilePage />} />
             <Route path="/add-document-details" element={<AddDocumentDetailsPage />} />
             <Route path="/employees" element={<EmployeeDirectory />} />
-
-
-
+            <Route path="/me" element={<Me />} />
           </Route>
         </Route>
 
